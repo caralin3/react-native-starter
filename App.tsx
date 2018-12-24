@@ -1,49 +1,54 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
+import * as React from 'react';
+import * as History from 'history';
+import { BackHandler } from 'react-native';
+import Config from 'react-native-config';
+import { Provider } from 'react-redux';
+import { Store } from 'redux';
+import { persistStore } from 'redux-persist';
+import { createHistory, Router } from './src/routes';
+import { createStore, ApplicationState } from './src/store';
 
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+const build = Config.BUILD;
+const appId = Config.APP_ID;
+console.log('Build', build);
+console.log('ID', appId);
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+interface AppProps {}
 
-type Props = {};
-export default class App extends Component<Props> {
-  render() {
+export default class App extends React.Component<AppProps> {
+  history: History.History = createHistory();
+
+  store: Store<ApplicationState> = createStore(this.history);
+
+  public componentWillMount() {
+    persistStore(this.store);
+
+    this.history.listen(location => {
+      let screenName = location.pathname.substr(1);
+      const firstIndex = screenName.indexOf('/');
+      screenName = firstIndex > -1 ? screenName.substring(0, firstIndex) : screenName;
+      // console.log(screenName);
+    });
+  }
+
+  public componentDidMount() {
+    BackHandler.addEventListener('hardwareBackPress', () => {
+      this.history.goBack();
+      return true;
+    });
+  }
+
+  public componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', () => null);
+  }
+  
+  public render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
-      </View>
+      <Provider store={this.store}>
+        {/* <ConnectedLayout history={this.history}> */}
+          <Router history={this.history} />
+        {/* </ConnectedLayout> */}
+      </Provider>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
