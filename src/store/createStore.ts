@@ -15,8 +15,10 @@ import {
 import { persistReducer } from 'redux-persist';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'remote-redux-devtools';
+import { LayoutState, reducer as layoutReducer  } from './layout';
 
 export interface ApplicationState {
+  layout: LayoutState;
   router: RouterState;
 }
 
@@ -31,6 +33,7 @@ export default (history: History.History): Store<ApplicationState> => {
   );
 
   const rootReducer = combineReducers<ApplicationState>({
+    layout: layoutReducer,
     router: connectRouter(history)
   });
 

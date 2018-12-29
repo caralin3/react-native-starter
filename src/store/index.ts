@@ -1,4 +1,10 @@
 import createStore, { ApplicationState } from './createStore';
-// import * as actions from './actions';
+import { hideFooter, hideHeader, toggleDrawer } from './layout';
 
-export { createStore, ApplicationState };
+export {
+  ApplicationState,
+  createStore,
+  hideFooter,
+  hideHeader,
+  toggleDrawer
+};
