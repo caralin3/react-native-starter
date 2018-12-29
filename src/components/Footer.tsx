@@ -21,7 +21,7 @@ export class Footer extends React.Component<FooterMergedProps, FooterState> {
   public render() {
     return (
       <View style={styles.container}>
-        <Text>Build: {Config.BUILD}</Text>
+        <Text style={styles.text}>Build: {Config.BUILD}</Text>
       </View>
     )
   }
@@ -29,7 +29,10 @@ export class Footer extends React.Component<FooterMergedProps, FooterState> {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#DDD',
+    backgroundColor: 'green',
     flexDirection: 'row'
+  },
+  text: {
+    color: 'white'
   }
 })
