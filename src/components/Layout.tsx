@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { push } from 'connected-react-router';
-import * as History from 'history';
 import DrawerLayout from 'react-native-drawer-layout';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';

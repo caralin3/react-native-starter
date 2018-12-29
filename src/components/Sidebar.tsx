@@ -20,10 +20,10 @@ export class Sidebar extends React.Component<SidebarProps> {
         <TouchableOpacity onPress={() => this.handlePress('/Home')}>
           <Text style={styles.text}>1</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => this.handlePress('/Form')}>
+        <TouchableOpacity onPress={() => this.handlePress('/2')}>
           <Text style={styles.text}>2</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => this.handlePress('/')}>
+        <TouchableOpacity onPress={() => this.handlePress('/3')}>
           <Text style={styles.text}>3</Text>
         </TouchableOpacity>
       </View>
